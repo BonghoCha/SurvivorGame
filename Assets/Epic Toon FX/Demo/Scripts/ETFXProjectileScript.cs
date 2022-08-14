@@ -26,6 +26,11 @@ namespace EpicToonFX
 		
         void FixedUpdate()
         {	
+            if (transform.position.z < -10)
+            {
+                Destroy(this.gameObject);
+            }
+
 			if (GetComponent<Rigidbody>().velocity.magnitude != 0)
 			{
 			    transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity); // Sets rotation to look at direction of movement
