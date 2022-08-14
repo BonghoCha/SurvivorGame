@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    bool _init = false;
+
     Rigidbody _rigidbody;
+
+    [SerializeField] Joystick _joystick;
 
     [SerializeField] GameObject _missilePrefab;
     [SerializeField] Transform _aimObject;
+    [SerializeField] ParticleSystem _aimParticle;
     [SerializeField] Transform _shootPosition;
 
     [SerializeField] float speed = 10f;
     [SerializeField] float missileSpeed = 1000f;
 
     [SerializeField] Vector3 direction;
+
+    public void SetSpeed(float num)
+    {
+        if (speed >= 2000f) return;
+
+        speed += num;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -26,23 +38,32 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = _joystick.Horizontal;//Input.GetAxisRaw("Horizontal");
+        float vertical = _joystick.Vertical;//Input.GetAxisRaw("Vertical");
 
-        if (horizontal != 0 || vertical != 0)
+        if (!horizontal.Equals(0) && !vertical.Equals(0))
         {
             direction = new Vector3(horizontal, vertical, 0).normalized;
-        }
 
-        if (direction.magnitude >= 0.1f)
+            if (direction.magnitude >= 0.1f)
+            {
+                if (!_init)
+                {
+                    _aimParticle.Play();
+                    _init = true;
+                }
+                var dir = (direction * Time.deltaTime * speed);
+                _rigidbody.velocity = dir;
+
+                // 방향에 맞춰서 돌아보게끔
+                var rot = Quaternion.LookRotation(Vector3.forward, dir);
+                _aimObject.rotation = rot;
+            }
+        } else
         {
-            var dir = (direction * Time.deltaTime * speed);
-            _rigidbody.velocity = dir;
-
-            // 방향에 맞춰서 돌아보게끔
-            var rot = Quaternion.LookRotation(Vector3.forward, dir);
-            _aimObject.rotation = rot;
+            _rigidbody.velocity = Vector3.zero;
         }
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -50,8 +71,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
+        if (!_init) return;
+
         GameObject goMissile = Instantiate(_missilePrefab, _shootPosition.position, Quaternion.identity);
 
         goMissile.GetComponent<Rigidbody>().AddForce(direction * missileSpeed);
