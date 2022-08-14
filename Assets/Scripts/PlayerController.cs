@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody2D _rigidbody;
+    Rigidbody _rigidbody;
 
     [SerializeField] GameObject _missilePrefab;
     [SerializeField] Transform _aimObject;
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody = GetComponent<Rigidbody>();
 
         Physics.gravity = new Vector3(0, 0, -9.81f);
     }
