@@ -8,6 +8,7 @@ TagManager:
   - Green
   - Blue
   - Missile
+  - Object
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Minimap
   - Non-PostProcessing
   - Missile
-  - 
+  - Object
   - 
   - 
   - 

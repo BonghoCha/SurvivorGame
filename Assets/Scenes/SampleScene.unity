@@ -134,9 +134,9 @@ GameObject:
   - component: {fileID: 94049010}
   - component: {fileID: 94049009}
   - component: {fileID: 94049008}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Block
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -445,9 +445,9 @@ GameObject:
   - component: {fileID: 151227403}
   - component: {fileID: 151227405}
   - component: {fileID: 151227404}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5249,7 +5249,7 @@ GameObject:
   - component: {fileID: 260424627}
   - component: {fileID: 260424626}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5267,6 +5267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a866a92ececc03b46bed842beb02b591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cinemacine: {fileID: 1040527843}
   Player: {fileID: 1733801871}
   scoreText: {fileID: 1979993383}
   extraSpeed: 200
@@ -5596,9 +5597,9 @@ GameObject:
   - component: {fileID: 457544731}
   - component: {fileID: 457544730}
   - component: {fileID: 457544729}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5714,9 +5715,9 @@ GameObject:
   - component: {fileID: 551392218}
   - component: {fileID: 551392220}
   - component: {fileID: 551392219}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10652,9 +10653,9 @@ GameObject:
   - component: {fileID: 799770694}
   - component: {fileID: 799770693}
   - component: {fileID: 799770692}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10895,7 +10896,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 375
+    m_Bits: 1911
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -11026,6 +11027,7 @@ GameObject:
   - component: {fileID: 1024898450}
   - component: {fileID: 1024898452}
   - component: {fileID: 1024898451}
+  - component: {fileID: 1024898453}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -11081,6 +11083,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1024898453
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024898449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 1
+  m_FrequencyGain: 0
+  mNoiseOffsets: {x: 962.71326, y: -623.6842, z: -536.5851}
 --- !u!1 &1040527842
 GameObject:
   m_ObjectHideFlags: 0
@@ -11159,9 +11178,9 @@ GameObject:
   - component: {fileID: 1358450636}
   - component: {fileID: 1358450638}
   - component: {fileID: 1358450637}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16112,9 +16131,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1623199055}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemies
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16151,9 +16170,9 @@ GameObject:
   - component: {fileID: 1662351510}
   - component: {fileID: 1662351509}
   - component: {fileID: 1662351508}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16515,9 +16534,9 @@ GameObject:
   - component: {fileID: 1868877867}
   - component: {fileID: 1868877866}
   - component: {fileID: 1868877865}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17034,9 +17053,9 @@ GameObject:
   - component: {fileID: 2038012997}
   - component: {fileID: 2038012999}
   - component: {fileID: 2038012998}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21838,9 +21857,9 @@ GameObject:
   - component: {fileID: 2094417922}
   - component: {fileID: 2094417924}
   - component: {fileID: 2094417923}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Block
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22054,10 +22073,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1280, y: 720}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

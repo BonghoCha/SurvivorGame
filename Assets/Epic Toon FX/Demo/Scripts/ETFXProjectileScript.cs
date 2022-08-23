@@ -53,7 +53,12 @@ namespace EpicToonFX
 
             if (Physics.SphereCast(transform.position, radius, direction, out hit, detectionDistance)) // Checks if collision will happen
             {
-                hit.transform.GetComponent<EnemyController>()?.Damage();
+                GameManager.instance.onCameraEffect();
+
+                if (hit.transform.CompareTag("Object"))
+                {
+                    hit.transform.GetComponent<EnemyController>().Damage();
+                }
 
                 transform.position = hit.point + (hit.normal * collideOffset); // Move projectile to point of collision
 
