@@ -45,7 +45,6 @@ public class EnemyController : MonoBehaviour
 
     void Initialize()
     {
-        Debug.Log("이니셜라이즈");
         _isAlive = true;
 
         heart = 5;
