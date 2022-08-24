@@ -22,6 +22,8 @@ public class EnemyController : MonoBehaviour
 
     public void Damage()
     {
+        GameManager.instance.SetDamage(-10, transform);
+
         if (heart > 0)
         {
             heart--;

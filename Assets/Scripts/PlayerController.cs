@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     bool _init = false;
 
-    Rigidbody _rigidbody;
+    public Rigidbody _rigidbody;
 
     [SerializeField] Joystick _joystick;
 
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed = 10f;
     [SerializeField] float missileSpeed = 1000f;
 
-    [SerializeField] Vector3 direction;
+    [SerializeField] public Vector3 direction;
 
     public void SetSpeed(float num)
     {

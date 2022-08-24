@@ -15,6 +15,13 @@ public class MissileController : MonoBehaviour
     {
         if (collision.transform.tag.Equals("Object"))
         {
+            GameManager.instance.onCameraEffect();
+
+            var enemyController = collision.transform.GetComponent<EnemyController>();
+            if (enemyController != null) { 
+                enemyController.Damage();
+            }
+
             GameObject impactP = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, collision.contacts[0].normal)) as GameObject; // Spawns impact effect
 
             ParticleSystem[] trails = GetComponentsInChildren<ParticleSystem>(); // Gets a list of particle systems, as we need to detach the trails
