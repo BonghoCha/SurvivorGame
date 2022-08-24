@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         _score += 100;
         scoreText.text = _score.ToString();
 
-        Player.SetSpeed(extraSpeed);
+        //Player.SetSpeed(extraSpeed);
     }
 
     private void OnEnable()
