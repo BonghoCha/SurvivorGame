@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Joystick _joystick;
 
+    [SerializeField] MissileType missileType;
+
     [SerializeField] GameObject _missilePrefab;
     [SerializeField] Transform _aimObject;
     [SerializeField] ParticleSystem _aimParticle;
@@ -75,7 +77,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!_init) return;
 
-        GameObject goMissile = Instantiate(_missilePrefab, _shootPosition.position, Quaternion.identity);
+        GameObject goMissile = MissileManager.instance.GetMissile(missileType);
+        goMissile.transform.SetPositionAndRotation(_shootPosition.position, Quaternion.identity);
 
         goMissile.GetComponent<Rigidbody>().AddForce(direction * missileSpeed);
     }
