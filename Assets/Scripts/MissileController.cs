@@ -18,11 +18,12 @@ public class MissileController : MonoBehaviour
         if (collision.transform.tag.Equals("Object"))
         {
             // 크리티컬 테스트
-            var testNum = 1f;
+            var testNum = 0.5f;
             var rand = UnityEngine.Random.Range(0f, 10f);
             if (rand > 8f)
             {
-                testNum = 5f;
+                isCritical = true;
+                testNum = 3f;
             }
 
             GameManager.instance.onCameraEffect(testNum);
