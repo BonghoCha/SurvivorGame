@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,8 @@ public class MissileController : MonoBehaviour
     public GameObject impactParticle;
     public GameObject muzzleParticle;
 
+    bool isCritical = false;
+
     Rigidbody rigidbody;
     SphereCollider collider;
 
@@ -15,11 +17,19 @@ public class MissileController : MonoBehaviour
     {
         if (collision.transform.tag.Equals("Object"))
         {
-            GameManager.instance.onCameraEffect();
+            // ÌÅ¨Î¶¨Ìã∞Ïª¨ ÌÖåÏä§Ìä∏
+            var testNum = 1f;
+            var rand = UnityEngine.Random.Range(0f, 10f);
+            if (rand > 8f)
+            {
+                testNum = 5f;
+            }
+
+            GameManager.instance.onCameraEffect(testNum);
 
             var enemyController = collision.transform.GetComponent<EnemyController>();
             if (enemyController != null) { 
-                enemyController.Damage();
+                enemyController.Damage(isCritical);
             }
 
             GameObject impactP = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, collision.contacts[0].normal)) as GameObject; // Spawns impact effect
@@ -56,7 +66,7 @@ public class MissileController : MonoBehaviour
         impactParticle = info.impactParticle;
         muzzleParticle = info.muzzleParticle;
 
-        // πﬂªÁ«“ ∂ß ∆¯πﬂ »ø∞˙
+        // Î∞úÏÇ¨Ìï† Îïå Ìè≠Î∞ú Ìö®Í≥º
         projectileParticle = Instantiate(projectileParticle, transform.position, transform.rotation, transform);
         if (muzzleParticle == null)
         {

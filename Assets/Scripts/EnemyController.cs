@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,9 +20,9 @@ public class EnemyController : MonoBehaviour
 
     int heart = 5;
 
-    public void Damage()
+    public void Damage(bool isCritical = false)
     {
-        GameManager.instance.SetDamage(-10, transform);
+        GameManager.instance.SetDamage(-10, transform, isCritical);
 
         if (heart > 0)
         {

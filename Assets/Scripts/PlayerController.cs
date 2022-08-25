@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
                 var dir = (direction * Time.deltaTime * speed);
                 _rigidbody.velocity = dir;
 
-                // ¹æÇâ¿¡ ¸ÂÃç¼­ µ¹¾Æº¸°Ô²û
+                // ë°©í–¥ì— ë§ì¶°ì„œ ëŒì•„ë³´ê²Œë”
                 var rot = Quaternion.LookRotation(Vector3.forward, dir);
                 _aimObject.rotation = rot;
             }

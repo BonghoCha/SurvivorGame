@@ -1,4 +1,4 @@
-using Cinemachine;
+﻿using Cinemachine;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
 
     [SerializeField] CinemachineVirtualCamera cinemacine;
-    public Action onCameraEffect;
+    public Action<float> onCameraEffect;
 
     [SerializeField] PlayerController Player;
 
@@ -24,13 +24,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform damageText;
     int damageCount = 0;
 
-    public void SetDamage(int num, Transform enemy)
+    public void SetDamage(int num, Transform enemy, bool isCritical = false)
     {
         var damage = damageText.GetChild(damageCount).GetComponent<TextMeshProUGUI>();
         damage.text = num + "";
         damage.transform.position = Camera.main.WorldToScreenPoint(enemy.position);
 
-        damage.GetComponent<FloatingText>().Initialize(enemy);
+        damage.GetComponent<FloatingText>().Initialize(enemy, isCritical);
 
         damage.gameObject.SetActive(true);
 
@@ -41,14 +41,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CameraNoise()
+    void CameraNoise(float num)
     {
         var noise = cinemacine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         Sequence sequence = DOTween.Sequence();
-
+        sequence.OnStart(() =>
+        {
+            noise.m_AmplitudeGain = num;
+        });
         sequence.Append(DOTween.To(() => noise.m_FrequencyGain, gain => noise.m_FrequencyGain = gain, 5f, 0.125f));
         sequence.Append(DOTween.To(() => noise.m_FrequencyGain, gain => noise.m_FrequencyGain = gain, 0f, 0.125f));
+        sequence.OnComplete(() =>
+        {
+            noise.m_AmplitudeGain = 1;
+        });
 
         sequence.Play();
     }
