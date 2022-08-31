@@ -28,8 +28,13 @@ public class MissileController : MonoBehaviour
 
             GameManager.instance.onCameraEffect(testNum);
 
-            var enemyController = collision.transform.GetComponent<EnemyController>();
-            if (enemyController != null) { 
+            var enemyController = collision.transform.GetComponent<ObjectManager>();
+            if (enemyController == null) {
+                // 박스 오브젝트는 구조가 다르기 때문에 임시로 참조
+                enemyController = collision.transform.parent.GetComponent<ObjectManager>();
+            }
+            if(enemyController != null)
+            {
                 enemyController.Damage(isCritical);
             }
 

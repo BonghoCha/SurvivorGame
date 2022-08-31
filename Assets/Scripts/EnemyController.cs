@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : ObjectManager
 {
     [SerializeField] Transform Player;
 
@@ -16,18 +16,17 @@ public class EnemyController : MonoBehaviour
     bool _isAlive = true;
 
     SpriteRenderer _sprite;
-    [SerializeField] ParticleSystem _dieParticle;
 
     int heart = 5;
 
-    public void Damage(bool isCritical = false)
+    public override void Damage(bool isCritical = false)
     {
         GameManager.instance.SetDamage(-10, transform, isCritical);
 
         if (heart > 0)
         {
             heart--;
-            if (heart <= 0) { 
+            if (heart <= 0) {
                 heart = -1;
                 _isAlive = false;
                 _collider.enabled = false;
@@ -39,10 +38,15 @@ public class EnemyController : MonoBehaviour
 
     public void Die()
     {
-        GameManager.instance.GetScore();        
+        GameManager.instance.GetScore();
 
-        _dieParticle.Play();
+        PlayParticle();
         _sprite.DOFade(0f, 1f).OnComplete(Initialize);
+    }
+
+    public override void OnDestroyObject()
+    {
+        
     }
 
     void Initialize()
