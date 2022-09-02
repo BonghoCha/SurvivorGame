@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class PlayerController : MonoBehaviour
     bool _init = false;
 
     public Rigidbody _rigidbody;
+    public Collider _collider;
 
     [SerializeField] Joystick _joystick;
 
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ParticleSystem _aimParticle;
     [SerializeField] Transform _shootPosition;
 
+    float _initialSpeed = 10f;
     [SerializeField] float speed = 10f;
     [SerializeField] float missileSpeed = 1000f;
 
@@ -33,8 +36,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
 
         Physics.gravity = new Vector3(0, 0, -9.81f);
+
+        _initialSpeed = speed;
     }
 
     // Update is called once per frame
@@ -71,6 +77,11 @@ public class PlayerController : MonoBehaviour
         {
             Shoot();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            Dash();
+        }
     }
 
     public void Shoot()
@@ -81,5 +92,25 @@ public class PlayerController : MonoBehaviour
         goMissile.transform.SetPositionAndRotation(_shootPosition.position, Quaternion.identity);
 
         goMissile.GetComponent<Rigidbody>().AddForce(direction * missileSpeed);
+    }
+
+    public void Dash()
+    {
+        if (!_init) return;
+
+
+        Sequence sequence = DOTween.Sequence();
+        sequence.OnStart(() =>
+        {
+            _collider.enabled = false;
+        });
+        sequence.Append(DOTween.To(() => speed, _ => speed = _, 10000f, 0.125f));
+        sequence.Append(DOTween.To(() => speed, _ => speed = _, _initialSpeed, 0.125f));
+        sequence.OnComplete(() =>
+        {
+            _collider.enabled = true;
+        });
+
+        sequence.Play();
     }
 }
