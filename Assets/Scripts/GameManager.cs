@@ -24,6 +24,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform damageText;
     int damageCount = 0;
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("충돌!");
+    }
+
     public void SetDamage(int num, Transform enemy, bool isCritical = false)
     {
         var damage = damageText.GetChild(damageCount).GetComponent<TextMeshProUGUI>();
