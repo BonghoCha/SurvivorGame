@@ -11,23 +11,18 @@ public class EnemyController : ObjectManager
     Vector3 _spawnPosition;
     [SerializeField] float speed = 10f;
 
-    Collider _collider;
 
     bool _isAlive = true;
 
-    SpriteRenderer _sprite;
-
-    int heart = 5;
-
-    public override void Damage(bool isCritical = false)
+    public override void Damage(int damage, bool isCritical = false)
     {
-        GameManager.instance.SetDamage(-10, transform, isCritical);
+        GameManager.instance.SetDamage(-damage, transform, isCritical);
 
-        if (heart > 0)
+        if (hp > 0)
         {
-            heart--;
-            if (heart <= 0) {
-                heart = -1;
+            hp -= damage;
+            if (hp <= 0) {
+                hp = -1;
                 _isAlive = false;
                 _collider.enabled = false;
 
@@ -53,7 +48,7 @@ public class EnemyController : ObjectManager
     {
         _isAlive = true;
 
-        heart = 5;
+        hp = 100;
         transform.position = _spawnPosition;
 
         _sprite.color = new Color(255, 255, 255, 1);
@@ -66,8 +61,7 @@ public class EnemyController : ObjectManager
     // Start is called before the first frame update
     void Start()
     {
-        if (_sprite == null) _sprite = GetComponent<SpriteRenderer>();
-        if (_collider == null) _collider = GetComponent<Collider>();
+
 
         _spawnPosition = transform.position;
 

@@ -4,10 +4,21 @@ using UnityEngine;
 
 public class BoxController : ObjectManager
 {
-    public override void Damage(bool isCritical = false)
+    private void Awake()
     {
-        PlayParticle();
-        OnDestroyObject();        
+        hp = 10;
+    }
+
+    public override void Damage(int damage, bool isCritical = false)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            hp = -1;
+
+            PlayParticle();
+            OnDestroyObject();
+        }
     }
 
     public override void OnDestroyObject()

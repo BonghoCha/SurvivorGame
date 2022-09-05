@@ -35,7 +35,7 @@ public class MissileController : MonoBehaviour
             }
             if(enemyController != null)
             {
-                enemyController.Damage(isCritical);
+                enemyController.Damage(10, isCritical);
             }
 
             GameObject impactP = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, collision.contacts[0].normal)) as GameObject; // Spawns impact effect
