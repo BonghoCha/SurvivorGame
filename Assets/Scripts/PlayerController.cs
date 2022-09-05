@@ -1,7 +1,9 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,6 +27,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public Vector3 direction;
 
+    public Action onShot;
+    public Action onDash;
+
     public void SetSpeed(float num)
     {
         if (speed >= 2000f) return;
@@ -33,7 +38,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
@@ -41,6 +46,18 @@ public class PlayerController : MonoBehaviour
         Physics.gravity = new Vector3(0, 0, -9.81f);
 
         _initialSpeed = speed;
+    }
+
+    private void OnEnable()
+    {
+        onShot += Shot;
+        onDash += Dash;
+    }
+
+    private void OnDisable()
+    {
+        onShot -= Shot;
+        onDash -= Dash;
     }
 
     // Update is called once per frame
@@ -75,16 +92,16 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Shoot();
+            onShot();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            Dash();
+            onDash();
         }
     }
 
-    public void Shoot()
+    public void Shot()
     {
         if (!_init) return;
 
@@ -97,7 +114,6 @@ public class PlayerController : MonoBehaviour
     public void Dash()
     {
         if (!_init) return;
-
 
         Sequence sequence = DOTween.Sequence();
         sequence.OnStart(() =>
