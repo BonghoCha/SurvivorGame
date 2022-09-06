@@ -34,6 +34,7 @@ public class EnemyController : ObjectManager
     public void Die()
     {
         GameManager.instance.GetScore();
+        GameManager.instance.GetEXP();
 
         PlayParticle();
         _sprite.DOFade(0f, 1f).OnComplete(Initialize);
@@ -61,8 +62,6 @@ public class EnemyController : ObjectManager
     // Start is called before the first frame update
     void Start()
     {
-
-
         _spawnPosition = transform.position;
 
         Initialize();

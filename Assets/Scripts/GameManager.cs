@@ -19,6 +19,10 @@ public class GameManager : MonoBehaviour
     int _score = 0;
     [SerializeField] Text scoreText;
 
+    float _exp = 0;
+    float _maxExp = 100;
+    [SerializeField] Slider expSlider;
+
     public float extraSpeed = 200f;
 
     [SerializeField] Transform damageText;
@@ -71,6 +75,20 @@ public class GameManager : MonoBehaviour
         scoreText.text = _score.ToString();
 
         //Player.SetSpeed(extraSpeed);
+    }
+
+    public void GetEXP()
+    {
+        _exp += 10f;
+
+        if (_exp >= _maxExp)
+        {
+            expSlider.value = 1;
+            _exp = 0;
+            Debug.Log("레벨업");
+        }
+
+        expSlider.value = _exp / _maxExp;
     }
 
     private void OnEnable()
