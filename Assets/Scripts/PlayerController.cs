@@ -7,36 +7,54 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    bool _init = false;
+    #region ### Player Info ###
+    [Header("Player Info")]
+    [SerializeField] float _power = 10f;
+    [SerializeField] float _speed = 10f;
+    [SerializeField] float _critical = 10f;
+    [SerializeField] float _firerate = 10f;
+    #endregion
 
-    public Rigidbody _rigidbody;
-    public Collider _collider;
+    [Header("Public Preperties")]
+    Rigidbody _rigidbody;
+    Collider _collider;
 
+    #region Joystick
     [SerializeField] Joystick _joystick;
+    #endregion
 
-    [SerializeField] MissileType missileType;
-
+    #region ### Missile Info ###
+    [Header("Missile Info")]
+    [SerializeField] MissileType _missileType;
+    
     [SerializeField] GameObject _missilePrefab;
     [SerializeField] Transform _aimObject;
     [SerializeField] ParticleSystem _aimParticle;
     [SerializeField] Transform _shootPosition;
 
-    float _initialSpeed = 10f;
-    [SerializeField] float speed = 10f;
     [SerializeField] float missileSpeed = 1000f;
+    #endregion
 
-    [SerializeField] public Vector3 direction;
+    #region ### Game Preperties ###
+    bool _init = false;                  // 캐릭터를 움직였는지 여부
+    Vector3 _direction;                  // 플레이어가 향한 방향
+    float _initialSpeed;                 // 캐릭터 스피드 (백업용)
+    #endregion
 
+    #region ### Actions ####
     public Action onShot;
     public Action onDash;
+    #endregion
 
+    #region ### UI Buttons ###
     [SerializeField] ButtonController[] buttons;
+    #endregion
 
     public void SetSpeed(float num)
     {
-        if (speed >= 2000f) return;
+        if (_speed >= 2000f) return;
 
-        speed += num;
+        _speed += num;
     }
 
     // Start is called before the first frame update
@@ -46,12 +64,30 @@ public class PlayerController : MonoBehaviour
         _collider = GetComponent<Collider>();
 
         Physics.gravity = new Vector3(0, 0, -9.81f);
+    }
 
-        _initialSpeed = speed;
+    void Init()
+    {
+        _power = PlayerInfo.Power;
+        _speed = PlayerInfo.Speed;
+        _critical = PlayerInfo.Critical;
+        _firerate = PlayerInfo.Firerate;
+
+        _initialSpeed = _speed;
+    }
+
+    void Save()
+    {
+        PlayerInfo.Power = _power;
+        PlayerInfo.Speed = _speed;
+        PlayerInfo.Critical = _critical;
+        PlayerInfo.Firerate = _firerate;
     }
 
     private void OnEnable()
     {
+        Init();
+
         for (int i=0; i<buttons.Length; i++)
         {
             switch (buttons[i].type)
@@ -74,6 +110,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
+        Save();
+
         for (int i = 0; i < buttons.Length; i++)
         {
             switch (buttons[i].type)
@@ -102,16 +140,16 @@ public class PlayerController : MonoBehaviour
 
         if (!horizontal.Equals(0) && !vertical.Equals(0))
         {
-            direction = new Vector3(horizontal, vertical, 0).normalized;
+            _direction = new Vector3(horizontal, vertical, 0).normalized;
 
-            if (direction.magnitude >= 0.1f)
+            if (_direction.magnitude >= 0.1f)
             {
                 if (!_init)
                 {
                     _aimParticle.Play();
                     _init = true;
                 }
-                var dir = (direction * Time.deltaTime * speed);
+                var dir = (_direction * Time.deltaTime * _speed);
                 _rigidbody.velocity = dir;
 
                 // 방향에 맞춰서 돌아보게끔
@@ -156,10 +194,10 @@ public class PlayerController : MonoBehaviour
         if (!_init) return;
         if (buttons[(int)ButtonController.ButtonType.Shot].isCooltime) return;
 
-        GameObject goMissile = MissileManager.instance.GetMissile(missileType);
+        GameObject goMissile = MissileManager.instance.GetMissile(_missileType);
         goMissile.transform.SetPositionAndRotation(_shootPosition.position, Quaternion.identity);
 
-        goMissile.GetComponent<Rigidbody>().AddForce(direction * missileSpeed);
+        goMissile.GetComponent<Rigidbody>().AddForce(_direction * missileSpeed);
     }
 
     void Dash()
@@ -172,8 +210,8 @@ public class PlayerController : MonoBehaviour
         {
             _collider.enabled = false;
         });
-        sequence.Append(DOTween.To(() => speed, _ => speed = _, 10000f, 0.125f));
-        sequence.Append(DOTween.To(() => speed, _ => speed = _, _initialSpeed, 0.125f));
+        sequence.Append(DOTween.To(() => _speed, _ => _speed = _, 10000f, 0.125f));
+        sequence.Append(DOTween.To(() => _speed, _ => _speed = _, _initialSpeed, 0.125f));
         sequence.OnComplete(() =>
         {
             _collider.enabled = true;
