@@ -106,7 +106,6 @@ public class GameManager : MonoBehaviour
             var count = FindObjectsOfType<GameManager>();
             if (count.Length > 1) return;
 
-            Debug.Log("셋팅");
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
