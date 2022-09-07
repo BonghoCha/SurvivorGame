@@ -60,7 +60,7 @@ public class MissileController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (rigidbody == null) rigidbody = GetComponent<Rigidbody>();
         if (collider == null) collider = GetComponent<SphereCollider>();        

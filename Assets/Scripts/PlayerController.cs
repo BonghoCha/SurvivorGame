@@ -1,7 +1,9 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,6 +27,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public Vector3 direction;
 
+    public Action onShot;
+    public Action onDash;
+
+    [SerializeField] ButtonController[] buttons;
+
     public void SetSpeed(float num)
     {
         if (speed >= 2000f) return;
@@ -33,7 +40,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
@@ -41,6 +48,50 @@ public class PlayerController : MonoBehaviour
         Physics.gravity = new Vector3(0, 0, -9.81f);
 
         _initialSpeed = speed;
+    }
+
+    private void OnEnable()
+    {
+        for (int i=0; i<buttons.Length; i++)
+        {
+            switch (buttons[i].type)
+            {
+                case ButtonController.ButtonType.Shot:
+                    {
+                        onShot += buttons[i].onClick;
+                        break;
+                    }
+                case ButtonController.ButtonType.Dash:
+                    {
+                        onDash += buttons[i].onClick;
+                        break;
+                    }
+            }
+        }
+        onShot += Shot;
+        onDash += Dash;
+    }
+
+    private void OnDisable()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            switch (buttons[i].type)
+            {
+                case ButtonController.ButtonType.Shot:
+                    {
+                        onShot -= buttons[i].onClick;
+                        break;
+                    }
+                case ButtonController.ButtonType.Dash:
+                    {
+                        onDash -= buttons[i].onClick;
+                        break;
+                    }
+            }
+        }
+        onShot -= Shot;
+        onDash -= Dash;
     }
 
     // Update is called once per frame
@@ -75,18 +126,35 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Shoot();
+            onShot();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            Dash();
+            onDash();
         }
     }
 
-    public void Shoot()
+    public void OnShot()
+    {
+        if (onShot != null)
+        {
+            onShot();            
+        }
+    }
+
+    public void OnDash()
+    {
+        if (onShot != null)
+        {
+            onDash();
+        }
+    }
+
+    void Shot()
     {
         if (!_init) return;
+        if (buttons[(int)ButtonController.ButtonType.Shot].isCooltime) return;
 
         GameObject goMissile = MissileManager.instance.GetMissile(missileType);
         goMissile.transform.SetPositionAndRotation(_shootPosition.position, Quaternion.identity);
@@ -94,10 +162,10 @@ public class PlayerController : MonoBehaviour
         goMissile.GetComponent<Rigidbody>().AddForce(direction * missileSpeed);
     }
 
-    public void Dash()
+    void Dash()
     {
         if (!_init) return;
-
+        if (buttons[(int)ButtonController.ButtonType.Dash].isCooltime) return;
 
         Sequence sequence = DOTween.Sequence();
         sequence.OnStart(() =>

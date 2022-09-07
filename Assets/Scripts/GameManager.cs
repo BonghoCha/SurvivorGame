@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera cinemacine;
     public Action<float> onCameraEffect;
 
-    [SerializeField] PlayerController Player;
+    public PlayerController Player;
 
     int _score = 0;
     [SerializeField] Text scoreText;
@@ -73,8 +73,6 @@ public class GameManager : MonoBehaviour
     {
         _score += 100;
         scoreText.text = _score.ToString();
-
-        //Player.SetSpeed(extraSpeed);
     }
 
     public void GetEXP()
@@ -101,14 +99,14 @@ public class GameManager : MonoBehaviour
         onCameraEffect -= CameraNoise;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         if (instance == null)
         {
             var count = FindObjectsOfType<GameManager>();
             if (count.Length > 1) return;
 
+            Debug.Log("셋팅");
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
