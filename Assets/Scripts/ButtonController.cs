@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,64 +7,34 @@ using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
 {
-    enum ButtonType
+    public enum ButtonType
     {
         Shot,
         Dash
     }
-    [SerializeField] ButtonType type;
+    public ButtonType type;
 
     [SerializeField] Image CooltimeImage;
 
     [Range(0, 15f)] [SerializeField] float cooltime = 0.5f;
-    bool isCooltime = false;
+    public bool isCooltime = false;
+
+    public Action onClick;
 
     private void OnEnable()
-    {
-        Debug.Log(GameManager.instance);
-
-        if (GameManager.instance != null)
-        {
-            switch (type)
-            {
-                case ButtonType.Shot:
-                    {
-                        GameManager.instance.Player.onShot += Cooltime;
-                        break;
-                    }
-                case ButtonType.Dash:
-                    {
-                        GameManager.instance.Player.onDash += Cooltime;
-                        break;
-                    }
-            }
-        }
+    {        
+        onClick += Cooltime;
     }
 
     private void OnDisable()
     {
-        if (GameManager.instance != null)
-        {
-            switch (type)
-            {
-                case ButtonType.Shot:
-                    {
-                        GameManager.instance.Player.onShot -= Cooltime;
-                        break;
-                    }
-                case ButtonType.Dash:
-                    {
-                        GameManager.instance.Player.onDash -= Cooltime;
-                        break;
-                    }
-            }
-        }
+        onClick -= Cooltime;
     }
 
     void Cooltime()
     {
         if (isCooltime) return;
-        Debug.Log("½ÇÇà");
+
         Sequence sequence = DOTween.Sequence();
         sequence.OnStart(() =>
         {

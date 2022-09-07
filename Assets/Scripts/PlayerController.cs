@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
     public Action onShot;
     public Action onDash;
 
+    [SerializeField] ButtonController[] buttons;
+
     public void SetSpeed(float num)
     {
         if (speed >= 2000f) return;
@@ -50,12 +52,44 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        for (int i=0; i<buttons.Length; i++)
+        {
+            switch (buttons[i].type)
+            {
+                case ButtonController.ButtonType.Shot:
+                    {
+                        onShot += buttons[i].onClick;
+                        break;
+                    }
+                case ButtonController.ButtonType.Dash:
+                    {
+                        onDash += buttons[i].onClick;
+                        break;
+                    }
+            }
+        }
         onShot += Shot;
         onDash += Dash;
     }
 
     private void OnDisable()
     {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            switch (buttons[i].type)
+            {
+                case ButtonController.ButtonType.Shot:
+                    {
+                        onShot -= buttons[i].onClick;
+                        break;
+                    }
+                case ButtonController.ButtonType.Dash:
+                    {
+                        onDash -= buttons[i].onClick;
+                        break;
+                    }
+            }
+        }
         onShot -= Shot;
         onDash -= Dash;
     }
@@ -101,9 +135,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Shot()
+    public void OnShot()
+    {
+        if (onShot != null)
+        {
+            onShot();            
+        }
+    }
+
+    public void OnDash()
+    {
+        if (onShot != null)
+        {
+            onDash();
+        }
+    }
+
+    void Shot()
     {
         if (!_init) return;
+        if (buttons[(int)ButtonController.ButtonType.Shot].isCooltime) return;
 
         GameObject goMissile = MissileManager.instance.GetMissile(missileType);
         goMissile.transform.SetPositionAndRotation(_shootPosition.position, Quaternion.identity);
@@ -111,9 +162,10 @@ public class PlayerController : MonoBehaviour
         goMissile.GetComponent<Rigidbody>().AddForce(direction * missileSpeed);
     }
 
-    public void Dash()
+    void Dash()
     {
         if (!_init) return;
+        if (buttons[(int)ButtonController.ButtonType.Dash].isCooltime) return;
 
         Sequence sequence = DOTween.Sequence();
         sequence.OnStart(() =>
