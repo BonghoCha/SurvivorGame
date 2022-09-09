@@ -9,7 +9,7 @@ public class BoxController : ObjectManager
         hp = 10;
     }
 
-    public override void Damage(int damage, bool isCritical = false)
+    public override void Damage(float damage, bool isCritical = false)
     {
         hp -= damage;
         if (hp <= 0)
@@ -23,6 +23,6 @@ public class BoxController : ObjectManager
 
     public override void OnDestroyObject()
     {
-        Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }

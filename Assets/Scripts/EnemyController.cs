@@ -14,9 +14,9 @@ public class EnemyController : ObjectManager
 
     bool _isAlive = true;
 
-    public override void Damage(int damage, bool isCritical = false)
+    public override void Damage(float damage, bool isCritical = false)
     {
-        GameManager.instance.SetDamage(-damage, transform, isCritical);
+        GameManager.instance.SetDamage(damage, transform, isCritical);
 
         if (hp > 0)
         {
@@ -49,7 +49,7 @@ public class EnemyController : ObjectManager
     {
         _isAlive = true;
 
-        hp = 100;
+        hp = 50;
         transform.position = _spawnPosition;
 
         _sprite.color = new Color(255, 255, 255, 1);

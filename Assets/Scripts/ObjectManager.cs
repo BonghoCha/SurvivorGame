@@ -12,8 +12,7 @@ public abstract class ObjectManager : MonoBehaviour
 
     protected SpriteRenderer _sprite;
 
-    protected int hp = 100;
-
+    protected float hp = 50;
 
     private void Awake()
     {
@@ -28,7 +27,7 @@ public abstract class ObjectManager : MonoBehaviour
         _destroyParticle.Play();
     }
 
-    public abstract void Damage(int damage, bool isCritical = false);
+    public abstract void Damage(float damage, bool isCritical = false);
 
     public abstract void OnDestroyObject();
 }
