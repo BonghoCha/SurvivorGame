@@ -28,15 +28,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform damageText;
     int damageCount = 0;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("충돌!");
-    }
-
-    public void SetDamage(int num, Transform enemy, bool isCritical = false)
+    public void SetDamage(float num, Transform enemy, bool isCritical = false)
     {
         var damage = damageText.GetChild(damageCount).GetComponent<TextMeshProUGUI>();
-        damage.text = num + "";
+        damage.text = "-" + Math.Floor(num);
         damage.transform.position = Camera.main.WorldToScreenPoint(enemy.position);
 
         damage.GetComponent<FloatingText>().Initialize(enemy, isCritical);

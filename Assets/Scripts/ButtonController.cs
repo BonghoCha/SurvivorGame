@@ -16,10 +16,18 @@ public class ButtonController : MonoBehaviour
 
     [SerializeField] Image CooltimeImage;
 
-    [Range(0, 15f)] [SerializeField] float cooltime = 0.5f;
+    [Range(0, 15f)] [SerializeField] float _cooltime = 0.5f;
     public bool isCooltime = false;
 
     public Action onClick;
+
+    private void Awake()
+    {
+        if (type.Equals(ButtonType.Shot))
+        {
+            SetCooltime(PlayerInfo.Firerate);
+        }
+    }
 
     private void OnEnable()
     {        
@@ -29,6 +37,11 @@ public class ButtonController : MonoBehaviour
     private void OnDisable()
     {
         onClick -= Cooltime;
+    }
+
+    public void SetCooltime(float cooltime)
+    {
+        _cooltime = cooltime;
     }
 
     void Cooltime()
@@ -43,7 +56,7 @@ public class ButtonController : MonoBehaviour
             CooltimeImage.fillAmount = 1f;
             CooltimeImage.gameObject.SetActive(true);
         });
-        sequence.Append(DOTween.To(() => CooltimeImage.fillAmount, amount => CooltimeImage.fillAmount = amount, 0, cooltime));
+        sequence.Append(DOTween.To(() => CooltimeImage.fillAmount, amount => CooltimeImage.fillAmount = amount, 0, _cooltime));
         sequence.OnComplete(() =>
         {
             CooltimeImage.gameObject.SetActive(false);
