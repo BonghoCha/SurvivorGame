@@ -19,8 +19,8 @@ public class MissileController : MonoBehaviour
         {
             // 크리티컬 테스트
             var testNum = 0.5f;
-            var rand = UnityEngine.Random.Range(0f, 10f);
-            if (rand > 8f)
+            var rand = UnityEngine.Random.Range(0f, 1f);
+            if (rand > PlayerInfo.Critical)
             {
                 isCritical = true;
                 testNum = 3f;
@@ -35,7 +35,7 @@ public class MissileController : MonoBehaviour
             }
             if(enemyController != null)
             {
-                enemyController.Damage(10, isCritical);
+                enemyController.Damage(PlayerInfo.Power * (isCritical ? PlayerInfo.CriticalPower : 1), isCritical);
             }
 
             GameObject impactP = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, collision.contacts[0].normal)) as GameObject; // Spawns impact effect
