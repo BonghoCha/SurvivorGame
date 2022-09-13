@@ -57,15 +57,6 @@ public class PlayerController : MonoBehaviour
         _speed += num;
     }
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-        _collider = GetComponent<Collider>();
-
-        Physics.gravity = new Vector3(0, 0, -9.81f);
-    }
-
     void Init()
     {
         _power = PlayerInfo.Power;
@@ -82,6 +73,14 @@ public class PlayerController : MonoBehaviour
         PlayerInfo.Speed = _speed;
         PlayerInfo.Critical = _critical;
         PlayerInfo.Firerate = _firerate;
+    }
+
+    void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
+
+        Physics.gravity = new Vector3(0, 0, -9.81f);
     }
 
     private void OnEnable()

@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class BoxController : ObjectManager
 {
+    MeshRenderer renderer;
+    BoxCollider collider;
+
+    float destroyDelay = 1f;
     private void Awake()
     {
+        renderer = GetComponent<MeshRenderer>();
+        collider = GetComponent<BoxCollider>();
+
         hp = 10;
     }
 
@@ -23,6 +30,15 @@ public class BoxController : ObjectManager
 
     public override void OnDestroyObject()
     {
+        renderer.enabled = false;
+        collider.enabled = false;
+
+        StartCoroutine(CoDestroy());
+    }
+
+    IEnumerator CoDestroy()
+    {
+        yield return new WaitForSeconds(destroyDelay);
         Destroy(transform.parent.gameObject);
     }
 }
