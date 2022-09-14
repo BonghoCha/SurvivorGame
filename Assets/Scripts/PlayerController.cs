@@ -87,7 +87,21 @@ public class PlayerController : MonoBehaviour
     {
         Init();
 
-        for (int i=0; i<buttons.Length; i++)
+        StartCoroutine(test());
+
+    }
+
+    float timeLimit = 5f;
+    IEnumerator test()
+    {
+        float time = 0f;
+        while (time > timeLimit)
+        {
+            time += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        for (int i = 0; i < buttons.Length; i++)
         {
             switch (buttons[i].type)
             {
@@ -163,12 +177,12 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            onShot();
+            OnShot();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            onDash();
+            OnDash();
         }
     }
 
