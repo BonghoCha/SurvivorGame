@@ -26,9 +26,6 @@ public class ButtonController : MonoBehaviour
         if (type.Equals(ButtonType.Shot))
         {
             SetCooltime(PlayerInfo.Firerate);
-        } else if (type.Equals(ButtonType.Dash))
-        {
-            SetCooltime(PlayerInfo.Firerate + 0.5f);
         }
     }
 

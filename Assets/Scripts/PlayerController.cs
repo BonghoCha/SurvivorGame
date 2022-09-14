@@ -65,6 +65,9 @@ public class PlayerController : MonoBehaviour
         _firerate = PlayerInfo.Firerate;
 
         _initialSpeed = _speed;
+
+        // 버튼 액션 동기화
+        StartCoroutine( SynchronizedOnAction() );
     }
 
     void Save()
@@ -86,37 +89,41 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         Init();
-
-        StartCoroutine(test());
-
     }
 
     float timeLimit = 5f;
-    IEnumerator test()
+    IEnumerator SynchronizedOnAction()
     {
         float time = 0f;
-        while (time > timeLimit)
+        while (time < timeLimit)
         {
+            for (int i = 0; i < buttons.Length; i++)
+            {                
+                switch (buttons[i].type)
+                {
+                    case ButtonController.ButtonType.Shot:
+                        {
+                            if (onShot == null) {
+                                onShot += buttons[i].onClick;
+                            }
+                            break;
+                        }
+                    case ButtonController.ButtonType.Dash:
+                        {
+                            if (onDash == null)
+                            {
+                                onDash += buttons[i].onClick;
+                            }
+                            break;
+                        }
+                }
+            }
+            if (onShot != null && onDash != null) break;
+
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
 
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            switch (buttons[i].type)
-            {
-                case ButtonController.ButtonType.Shot:
-                    {
-                        onShot += buttons[i].onClick;
-                        break;
-                    }
-                case ButtonController.ButtonType.Dash:
-                    {
-                        onDash += buttons[i].onClick;
-                        break;
-                    }
-            }
-        }
         onShot += Shot;
         onDash += Dash;
     }
@@ -141,8 +148,15 @@ public class PlayerController : MonoBehaviour
                     }
             }
         }
-        onShot -= Shot;
-        onDash -= Dash;
+        if (onShot != null)
+        {
+            onShot -= Shot;
+        }
+
+        if (onDash != null)
+        {
+            onDash -= Dash;
+        }
     }
 
     // Update is called once per frame
