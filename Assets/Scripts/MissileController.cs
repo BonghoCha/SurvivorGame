@@ -8,6 +8,8 @@ public class MissileController : MonoBehaviour
     public GameObject impactParticle;
     public GameObject muzzleParticle;
 
+    public float currentPower;
+
     bool isCritical = false;
 
     Rigidbody rigidbody;
@@ -35,7 +37,7 @@ public class MissileController : MonoBehaviour
             }
             if(enemyController != null)
             {
-                enemyController.Damage(PlayerInfo.Power * (isCritical ? PlayerInfo.CriticalPower : 1), isCritical);
+                enemyController.Damage((PlayerInfo.Power + currentPower) * (isCritical ? PlayerInfo.CriticalPower : 1), isCritical);
             }
 
             GameObject impactP = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, collision.contacts[0].normal)) as GameObject; // Spawns impact effect
@@ -71,6 +73,8 @@ public class MissileController : MonoBehaviour
         projectileParticle = info.projectileParticle;
         impactParticle = info.impactParticle;
         muzzleParticle = info.muzzleParticle;
+
+        currentPower = info.power;
 
         // 발사할 때 폭발 효과
         projectileParticle = Instantiate(projectileParticle, transform.position, transform.rotation, transform);

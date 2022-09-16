@@ -26,6 +26,16 @@ public class PlayerController : MonoBehaviour
     #region ### Missile Info ###
     [Header("Missile Info")]
     [SerializeField] MissileType _missileType;
+    MissileType missileType {
+        get
+        {
+            return _missileType;
+        }
+        set
+        {
+            missileType = value;
+        }
+    }
     
     [SerializeField] GameObject _missilePrefab;
     [SerializeField] Transform _aimObject;
@@ -221,7 +231,7 @@ public class PlayerController : MonoBehaviour
         if (!_init) return;
         if (buttons[(int)ButtonController.ButtonType.Shot].isCooltime) return;
 
-        GameObject goMissile = MissileManager.instance.GetMissile(_missileType);
+        GameObject goMissile = MissileManager.instance.GetMissile(missileType);
         goMissile.transform.SetPositionAndRotation(_shootPosition.position, Quaternion.identity);
 
         goMissile.GetComponent<Rigidbody>().AddForce(_direction * missileSpeed);

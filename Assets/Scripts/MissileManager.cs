@@ -9,6 +9,8 @@ public class MissileInfo
     public GameObject projectileParticle;
     public GameObject impactParticle;
     public GameObject muzzleParticle;
+
+    public float power;
 }
 
 public enum MissileType
