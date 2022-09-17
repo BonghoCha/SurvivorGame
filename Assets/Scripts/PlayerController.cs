@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
         set
         {
             missileType = value;
+
+            missileSpeed = MissileManager.instance.missileInfo[(int)missileType].speed;
         }
     }
     

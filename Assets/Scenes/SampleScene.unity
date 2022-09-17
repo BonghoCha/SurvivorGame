@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0063648457, g: 0.06265099, b: 0.23060751, a: 1}
+  m_IndirectSpecularColor: {r: 0.0046280636, g: 0.0589559, b: 0.23224854, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -312,10 +312,12 @@ MonoBehaviour:
     impactParticle: {fileID: 1564713908722058, guid: e7092004a31024943a4064c2bd683c37, type: 3}
     muzzleParticle: {fileID: 1458448907343064, guid: 182277e42775dd64385dbbc0139dbd26, type: 3}
     power: 3
+    speed: 1000
   - projectileParticle: {fileID: 1554052670201816, guid: 174abc6143e2fa248947bdfce35fd35f, type: 3}
     impactParticle: {fileID: 127350, guid: 44053fcf5ec3ddc429076f23c65685ef, type: 3}
     muzzleParticle: {fileID: 169982, guid: 83cbfdcec541739499bcee069cf124ad, type: 3}
     power: 5
+    speed: 800
 --- !u!4 &130613917
 Transform:
   m_ObjectHideFlags: 0

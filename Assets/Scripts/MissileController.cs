@@ -21,7 +21,7 @@ public class MissileController : MonoBehaviour
         {
             // 크리티컬 테스트
             var testNum = 0.5f;
-            var rand = UnityEngine.Random.Range(0f, 1f);
+            var rand = Random.Range(0f, 1f);
             if (rand > PlayerInfo.Critical)
             {
                 isCritical = true;

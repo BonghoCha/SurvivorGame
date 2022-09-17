@@ -11,6 +11,7 @@ public class MissileInfo
     public GameObject muzzleParticle;
 
     public float power;
+    public float speed;
 }
 
 public enum MissileType
@@ -25,7 +26,7 @@ public class MissileManager : MonoBehaviour
 
     public GameObject missileDefault;
 
-    [SerializeField] List<MissileInfo> missileInfo;
+    public List<MissileInfo> missileInfo;
 
     public GameObject GetMissile(MissileType type)
     {
