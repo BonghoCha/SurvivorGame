@@ -12,6 +12,10 @@ public class MissileController : MonoBehaviour
 
     bool isCritical = false;
 
+
+    [SerializeField] float liftTime = 3f;
+    WaitForSeconds liftTimeDelay;
+
     Rigidbody rigidbody;
     SphereCollider collider;
 
@@ -65,7 +69,16 @@ public class MissileController : MonoBehaviour
     void Awake()
     {
         if (rigidbody == null) rigidbody = GetComponent<Rigidbody>();
-        if (collider == null) collider = GetComponent<SphereCollider>();        
+        if (collider == null) collider = GetComponent<SphereCollider>();
+
+        liftTimeDelay = new WaitForSeconds(liftTime);
+    }
+
+    IEnumerator LiftTime()
+    {
+        yield return liftTimeDelay;
+
+        Destroy(gameObject);
     }
 
     public void Initialize(MissileInfo info)
@@ -83,5 +96,8 @@ public class MissileController : MonoBehaviour
             muzzleParticle = Instantiate(muzzleParticle, transform.position, transform.rotation) as GameObject;
             Destroy(muzzleParticle, 1.5f); // 2nd parameter is lifetime of effect in seconds
         }
+
+        // 라이프 타임
+        StartCoroutine(LiftTime());
     }
 }
