@@ -6,7 +6,7 @@ using UnityEngine;
 public static class PlayerInfo
 {
     public static float Power = 10f;
-    public static float Speed = 1000f;
+    public static float Speed = 100f;
 
     public static float CriticalPower = 2f;
     public static float Critical = 0.5f;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0046280636, g: 0.0589559, b: 0.23224854, a: 1}
+  m_IndirectSpecularColor: {r: 0.0063648457, g: 0.06265099, b: 0.23060751, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8896,7 +8896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _power: 10
-  _speed: 10
+  _speed: 100
   _critical: 10
   _firerate: 10
   _joystick: {fileID: 1541387835}
