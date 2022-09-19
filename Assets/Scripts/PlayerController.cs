@@ -171,8 +171,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnShot();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            OnDash();
+        }
+    }
+
+    void FixedUpdate()
     {
         float horizontal = _joystick.Horizontal;//Input.GetAxisRaw("Horizontal");
         float vertical = _joystick.Vertical;//Input.GetAxisRaw("Vertical");
@@ -198,17 +210,6 @@ public class PlayerController : MonoBehaviour
         } else
         {
             _rigidbody.velocity = Vector3.zero;
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            OnShot();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            OnDash();
         }
     }
 
@@ -249,7 +250,7 @@ public class PlayerController : MonoBehaviour
         {
             _collider.enabled = false;
         });
-        sequence.Append(DOTween.To(() => _speed, _ => _speed = _, 10000f, 0.125f));
+        sequence.Append(DOTween.To(() => _speed, _ => _speed = _, 1000f, 0.125f));
         sequence.Append(DOTween.To(() => _speed, _ => _speed = _, _initialSpeed, 0.125f));
         sequence.OnComplete(() =>
         {
