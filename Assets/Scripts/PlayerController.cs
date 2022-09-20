@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerController : MonoBehaviour
+public partial class PlayerController : MonoBehaviour
 {
     #region ### Player Info ###
     [Header("Player Info")]
@@ -53,11 +53,6 @@ public class PlayerController : MonoBehaviour
     float _initialSpeed;                 // 캐릭터 스피드 (백업용)
     #endregion
 
-    #region ### Actions ####
-    public Action onShot;
-    public Action onDash;
-    #endregion
-
     #region ### UI Buttons ###
     [SerializeField] ButtonController[] buttons;
     #endregion
@@ -79,7 +74,7 @@ public class PlayerController : MonoBehaviour
         _initialSpeed = _speed;
 
         // 버튼 액션 동기화
-        StartCoroutine( SynchronizedOnAction() );
+        StartCoroutine( SynchronizedOnActions() );
     }
 
     void Save()
@@ -103,88 +98,11 @@ public class PlayerController : MonoBehaviour
         Init();
     }
 
-    float timeLimit = 5f;
-    IEnumerator SynchronizedOnAction()
-    {
-        float time = 0f;
-        while (time < timeLimit)
-        {
-            for (int i = 0; i < buttons.Length; i++)
-            {                
-                switch (buttons[i].type)
-                {
-                    case ButtonController.ButtonType.Shot:
-                        {
-                            if (onShot == null) {
-                                onShot += buttons[i].onClick;
-                            }
-                            break;
-                        }
-                    case ButtonController.ButtonType.Dash:
-                        {
-                            if (onDash == null)
-                            {
-                                onDash += buttons[i].onClick;
-                            }
-                            break;
-                        }
-                }
-            }
-            if (onShot != null && onDash != null) break;
-
-            time += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-
-        onShot += Shot;
-        onDash += Dash;
-    }
-
     private void OnDisable()
     {
         Save();
-
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            switch (buttons[i].type)
-            {
-                case ButtonController.ButtonType.Shot:
-                    {
-                        onShot -= buttons[i].onClick;
-                        break;
-                    }
-                case ButtonController.ButtonType.Dash:
-                    {
-                        onDash -= buttons[i].onClick;
-                        break;
-                    }
-            }
-        }
-        if (onShot != null)
-        {
-            onShot -= Shot;
-        }
-
-        if (onDash != null)
-        {
-            onDash -= Dash;
-        }
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            OnShot();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            OnDash();
-        }
-    }
-
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         float horizontal = _joystick.Horizontal;//Input.GetAxisRaw("Horizontal");
         float vertical = _joystick.Vertical;//Input.GetAxisRaw("Vertical");
@@ -211,52 +129,5 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody.velocity = Vector3.zero;
         }
-    }
-
-    public void OnShot()
-    {
-        if (onShot != null)
-        {
-            onShot();            
-        }
-    }
-
-    public void OnDash()
-    {
-        if (onShot != null)
-        {
-            onDash();
-        }
-    }
-
-    void Shot()
-    {
-        if (!_init) return;
-        if (buttons[(int)ButtonController.ButtonType.Shot].isCooltime) return;
-
-        GameObject goMissile = MissileManager.instance.GetMissile(missileType);
-        goMissile.transform.SetPositionAndRotation(_shootPosition.position, Quaternion.identity);
-
-        goMissile.GetComponent<Rigidbody>().AddForce(_direction * missileSpeed);
-    }
-
-    void Dash()
-    {
-        if (!_init) return;
-        if (buttons[(int)ButtonController.ButtonType.Dash].isCooltime) return;
-
-        Sequence sequence = DOTween.Sequence();
-        sequence.OnStart(() =>
-        {
-            _collider.enabled = false;
-        });
-        sequence.Append(DOTween.To(() => _speed, _ => _speed = _, 1000f, 0.125f));
-        sequence.Append(DOTween.To(() => _speed, _ => _speed = _, _initialSpeed, 0.125f));
-        sequence.OnComplete(() =>
-        {
-            _collider.enabled = true;
-        });
-
-        sequence.Play();
     }
 }
