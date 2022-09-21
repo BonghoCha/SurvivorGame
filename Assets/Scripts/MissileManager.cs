@@ -17,7 +17,8 @@ public class MissileInfo
 public enum MissileType
 {
     FireballSoftBlue,
-    RocketMeshMissileBlue
+    RocketMeshMissileBlue,
+    LightningSoftYellow
 }
 
 public class MissileManager : MonoBehaviour
