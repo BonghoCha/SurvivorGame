@@ -12,6 +12,15 @@ public class MissileInfo
 
     public float power;
     public float speed;
+
+    public bool hasExtraEffect;
+
+    public float debuffTime;
+
+    public void OnExtraEffect(EnemyController enemy)
+    {
+        enemy.Stop(debuffTime);
+    }
 }
 
 public enum MissileType

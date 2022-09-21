@@ -12,7 +12,17 @@ public class EnemyController : ObjectManager
     [SerializeField] float speed = 10f;
 
 
+    [SerializeField] bool _canMove = true;
+
+    Color defaultColor = new Color(255, 255, 255, 1);
+    Color debuffColor = new Color(255, 255, 0, 1);
+
     bool _isAlive = true;
+
+    public override void OnDestroyObject()
+    {
+
+    }
 
     public override void Damage(float damage, bool isCritical = false)
     {
@@ -40,10 +50,27 @@ public class EnemyController : ObjectManager
         _sprite.DOFade(0f, 1f).OnComplete(Initialize);
     }
 
-    public override void OnDestroyObject()
+    Coroutine coStop = null;
+    public void Stop(float delay = 0f)
     {
-        
+        if (coStop != null)
+        {
+            StopCoroutine(coStop);
+        }
+        coStop = StartCoroutine( CoStop(delay) );
     }
+
+    IEnumerator CoStop(float delay)
+    {
+        _canMove = false;
+        _sprite.color = debuffColor;
+
+        yield return new WaitForSeconds(delay);
+
+        _canMove = true;
+        _sprite.color = defaultColor;
+    }
+
 
     void Initialize()
     {
@@ -70,6 +97,8 @@ public class EnemyController : ObjectManager
     // Update is called once per frame
     void Update()
     {
+        if (!_canMove) return;
+
         if (_isAlive)
         {
             transform.position = Vector3.MoveTowards(transform.position, Player.position, Time.deltaTime*speed);

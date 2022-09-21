@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +13,10 @@ public class MissileController : MonoBehaviour
 
     bool isCritical = false;
 
-
     [SerializeField] float liftTime = 3f;
     WaitForSeconds liftTimeDelay;
+
+    Action<EnemyController> onExtraEffect;
 
     Rigidbody rigidbody;
     SphereCollider collider;
@@ -25,7 +27,7 @@ public class MissileController : MonoBehaviour
         {
             // 크리티컬 테스트
             var testNum = 0.5f;
-            var rand = Random.Range(0f, 1f);
+            var rand = UnityEngine.Random.Range(0f, 1f);
             if (rand > PlayerInfo.Critical)
             {
                 isCritical = true;
@@ -42,6 +44,8 @@ public class MissileController : MonoBehaviour
             if(enemyController != null)
             {
                 enemyController.Damage((PlayerInfo.Power + currentPower) * (isCritical ? PlayerInfo.CriticalPower : 1), isCritical);
+                if (onExtraEffect != null) onExtraEffect((EnemyController)enemyController);
+
             }
 
             GameObject impactP = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, collision.contacts[0].normal)) as GameObject; // Spawns impact effect
@@ -88,6 +92,12 @@ public class MissileController : MonoBehaviour
         muzzleParticle = info.muzzleParticle;
 
         currentPower = info.power;
+
+        if (info.hasExtraEffect)
+        {
+            onExtraEffect = null;
+            onExtraEffect += info.OnExtraEffect;
+        }
 
         // 발사할 때 폭발 효과
         projectileParticle = Instantiate(projectileParticle, transform.position, transform.rotation, transform);
