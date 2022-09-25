@@ -41,7 +41,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2906357899715846639}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
@@ -77,3 +77,5 @@ MonoBehaviour:
   projectileParticle: {fileID: 0}
   impactParticle: {fileID: 0}
   muzzleParticle: {fileID: 0}
+  currentPower: 0
+  liftTime: 3

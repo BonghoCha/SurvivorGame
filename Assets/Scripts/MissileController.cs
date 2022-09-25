@@ -21,9 +21,9 @@ public class MissileController : MonoBehaviour
     Rigidbody rigidbody;
     SphereCollider collider;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.transform.tag.Equals("Object"))
+        if (other.CompareTag("Object"))
         {
             // 크리티컬 테스트
             var testNum = 0.5f;
@@ -36,19 +36,20 @@ public class MissileController : MonoBehaviour
 
             GameManager.instance.onCameraEffect(testNum);
 
-            var enemyController = collision.transform.GetComponent<ObjectManager>();
-            if (enemyController == null) {
+            var enemyController = other.transform.GetComponent<ObjectManager>();
+            if (enemyController == null)
+            {
                 // 박스 오브젝트는 구조가 다르기 때문에 임시로 참조
-                enemyController = collision.transform.parent.GetComponent<ObjectManager>();
+                enemyController = other.transform.parent.GetComponent<ObjectManager>();
             }
-            if(enemyController != null)
+            if (enemyController != null)
             {
                 enemyController.Damage((PlayerInfo.Power + currentPower) * (isCritical ? PlayerInfo.CriticalPower : 1), isCritical);
                 if (onExtraEffect != null) onExtraEffect((EnemyController)enemyController);
 
             }
 
-            GameObject impactP = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, collision.contacts[0].normal)) as GameObject; // Spawns impact effect
+            GameObject impactP = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, collider.ClosestPoint(transform.position).normalized)) as GameObject; // Spawns impact effect
 
             ParticleSystem[] trails = GetComponentsInChildren<ParticleSystem>(); // Gets a list of particle systems, as we need to detach the trails
                                                                                  //Component at [0] is that of the parent i.e. this object (if there is any)
@@ -68,6 +69,7 @@ public class MissileController : MonoBehaviour
             Destroy(gameObject); // Removes the projectile
         }
     }
+
 
     // Start is called before the first frame update
     void Awake()
