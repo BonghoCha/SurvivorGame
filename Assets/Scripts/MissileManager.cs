@@ -17,9 +17,9 @@ public class MissileInfo
 
     public float debuffTime;
 
-    public void OnExtraEffect(EnemyController enemy)
+    public void OnExtraEffect(ObjectManager obj)
     {
-        enemy.Stop(debuffTime);
+        obj.Stop(debuffTime);
     }
 }
 

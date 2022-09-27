@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 4127434865814575311}
   - component: {fileID: 4127434865826263681}
   m_Layer: 0
-  m_Name: SpikyExplosionBlue
+  m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -16,7 +16,7 @@ public class MissileController : MonoBehaviour
     [SerializeField] float liftTime = 3f;
     WaitForSeconds liftTimeDelay;
 
-    Action<EnemyController> onExtraEffect;
+    Action<ObjectManager> onExtraEffect;
 
     Rigidbody rigidbody;
     SphereCollider collider;
@@ -36,16 +36,20 @@ public class MissileController : MonoBehaviour
 
             GameManager.instance.onCameraEffect(testNum);
 
-            var enemyController = other.transform.GetComponent<ObjectManager>();
-            if (enemyController == null)
+            var objectManager = other.transform.GetComponent<ObjectManager>();
+            if (objectManager == null)
             {
                 // 박스 오브젝트는 구조가 다르기 때문에 임시로 참조
-                enemyController = other.transform.parent.GetComponent<ObjectManager>();
+                objectManager = other.transform.parent.GetComponent<ObjectManager>();
             }
-            if (enemyController != null)
+
+            if (objectManager != null)
             {
-                enemyController.Damage((PlayerInfo.Power + currentPower) * (isCritical ? PlayerInfo.CriticalPower : 1), isCritical);
-                if (onExtraEffect != null) onExtraEffect((EnemyController)enemyController);
+                objectManager.Damage((PlayerInfo.Power + currentPower) * (isCritical ? PlayerInfo.CriticalPower : 1), isCritical);
+                if (onExtraEffect != null)
+                {
+                    onExtraEffect(objectManager);
+                }
 
             }
 
