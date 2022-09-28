@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 4127434865814654733}
   - component: {fileID: 4127434865814575311}
   - component: {fileID: 4127434865826263681}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5120,7 +5120,7 @@ GameObject:
   - component: {fileID: 4127434865829768971}
   - component: {fileID: 4127434865814611341}
   - component: {fileID: 4127434865814582423}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CloudBurst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
