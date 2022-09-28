@@ -11,11 +11,6 @@ public class EnemyController : ObjectManager
     Vector3 _spawnPosition;
     [SerializeField] float speed = 10f;
 
-
-
-    Color defaultColor = new Color(255, 255, 255, 1);
-    Color debuffColor = new Color(255, 255, 0, 1);
-
     bool _isAlive = true;
 
     public override void OnDestroyObject()

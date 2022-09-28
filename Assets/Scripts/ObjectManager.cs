@@ -14,6 +14,9 @@ public abstract class ObjectManager : MonoBehaviour
 
     protected float hp = 50;
 
+    Color defaultColor = new Color(255, 255, 255, 1);
+    Color debuffColor = new Color(255, 255, 0, 1);
+
     private void Awake()
     {
         if (_sprite == null) _sprite = GetComponent<SpriteRenderer>();
@@ -41,10 +44,12 @@ public abstract class ObjectManager : MonoBehaviour
 
     IEnumerator CoStop(float delay)
     {
+        _sprite.color = debuffColor;
         _canMove = false;
 
         yield return new WaitForSeconds(delay);
 
+        _sprite.color = defaultColor;
         _canMove = true;
     }
 
