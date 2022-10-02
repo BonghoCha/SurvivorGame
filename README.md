@@ -1,6 +1,7 @@
 # SurvivorGame
 
 Unity Verstion : 2020.3.28f1
+Playform : Mobile(Android/iOS)
 
 Import Assets
 [Util]
