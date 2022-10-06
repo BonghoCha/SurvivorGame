@@ -44,12 +44,18 @@ public abstract class ObjectManager : MonoBehaviour
 
     IEnumerator CoStop(float delay)
     {
-        _sprite.color = debuffColor;
+        if (_sprite != null)
+        {
+            _sprite.color = debuffColor;
+        }
         _canMove = false;
 
         yield return new WaitForSeconds(delay);
 
-        _sprite.color = defaultColor;
+        if (_sprite != null)
+        {
+            _sprite.color = defaultColor;            
+        }
         _canMove = true;
     }
 
