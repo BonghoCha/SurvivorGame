@@ -12,6 +12,7 @@ public class MissileInfo
 
     public float power;
     public float speed;
+    public float knockback;
 
     public bool hasExtraEffect;
 
