@@ -16,9 +16,6 @@ public class GameManager : MonoBehaviour
 
     public PlayerController Player;
 
-    int _score = 0;
-    [SerializeField] Text scoreText;
-
     float _exp = 0;
     float _maxExp = 100;
     [SerializeField] Slider expSlider;
@@ -62,12 +59,6 @@ public class GameManager : MonoBehaviour
         });
 
         sequence.Play();
-    }
-
-    public void GetScore()
-    {
-        _score += 100;
-        scoreText.text = _score.ToString();
     }
 
     public void GetEXP()

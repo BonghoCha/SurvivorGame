@@ -37,7 +37,6 @@ public class EnemyController : ObjectManager
 
     public void Die()
     {
-        GameManager.instance.GetScore();
         GameManager.instance.GetEXP();
 
         PlayParticle();
