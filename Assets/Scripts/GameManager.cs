@@ -25,6 +25,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform damageText;
     int damageCount = 0;
 
+    private int enemyNum = 0;
+
+    public void AddEnemy()
+    {
+        enemyNum++;
+    }
+
+    public void RemoveEnemy()
+    {
+        enemyNum--;
+        if (enemyNum <= 0)
+        {
+            enemyNum = 0;
+            Debug.Log("게임 끝");
+        }
+    }
+
     public void SetDamage(float num, Transform enemy, bool isCritical = false)
     {
         var damage = damageText.GetChild(damageCount).GetComponent<TextMeshProUGUI>();

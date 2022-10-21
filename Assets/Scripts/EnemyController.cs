@@ -8,6 +8,25 @@ public class EnemyController : ObjectManager
 {
     [SerializeField] Transform Player;
 
+    public bool isContact = false;
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (Player.Equals(collision.transform))
+        {
+            isContact = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (Player.Equals(collision.transform))
+        {
+            isContact = false;
+        }
+    }
+
     Vector3 _spawnPosition;
     [SerializeField] float speed = 10f;
 
@@ -15,7 +34,7 @@ public class EnemyController : ObjectManager
 
     public override void OnDestroyObject()
     {
-
+        Destroy(gameObject);
     }
 
     public override void Damage(float damage, bool isCritical = false)
@@ -38,9 +57,10 @@ public class EnemyController : ObjectManager
     public void Die()
     {
         GameManager.instance.GetEXP();
+        GameManager.instance.RemoveEnemy();
 
         PlayParticle();
-        _sprite.DOFade(0f, 1f).OnComplete(Initialize);
+        _sprite.DOFade(0f, 1f).OnComplete(OnDestroyObject);
     }
 
 
@@ -56,6 +76,8 @@ public class EnemyController : ObjectManager
         _collider.enabled = true;
 
         speed = Random.Range(1f, 2f);
+
+        GameManager.instance.AddEnemy();
     }
 
     // Start is called before the first frame update
