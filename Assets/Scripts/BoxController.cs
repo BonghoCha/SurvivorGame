@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class BoxController : ObjectManager
 {
-    MeshRenderer renderer;
-    BoxCollider collider;
+    MeshRenderer _renderer;
 
     float destroyDelay = 1f;
-    private void Awake()
-    {
-        renderer = GetComponent<MeshRenderer>();
-        collider = GetComponent<BoxCollider>();
 
-        hp = 10;
+    private void Start()
+    {
+        _renderer = GetComponent<MeshRenderer>();
     }
 
     public override void Damage(float damage, bool isCritical = false)
@@ -30,8 +27,8 @@ public class BoxController : ObjectManager
 
     public override void OnDestroyObject()
     {
-        renderer.enabled = false;
-        collider.enabled = false;
+        _renderer.enabled = false;
+        _collider.enabled = false;
 
         StartCoroutine(CoDestroy());
     }

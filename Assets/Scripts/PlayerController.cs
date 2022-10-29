@@ -57,6 +57,34 @@ public partial class PlayerController : MonoBehaviour
     [SerializeField] ButtonController[] buttons;
     #endregion
 
+    [SerializeField] List<EnemyController> enemyList = new List<EnemyController>();
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        var target = collision.transform.GetComponent<EnemyController>();
+
+        if (target != null)
+        {
+            if (target.isContact) return;
+
+            target.isContact = true;
+            enemyList.Add(target);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        var target = collision.transform.GetComponent<EnemyController>();
+
+        if (target != null)
+        {
+            if (!target.isContact) return;
+
+            target.isContact = false;
+            enemyList.Remove(target);
+        }
+    }
+
     public void SetSpeed(float num)
     {
         if (_speed >= 2000f) return;
