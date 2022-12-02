@@ -11,8 +11,23 @@ public class IntroManager : MonoBehaviour
         
     }
 
+    #region Method
+    
+    /// <summary>
+    /// 게임 시작
+    /// </summary>
     public void OnClickGameStart()
     {
         SceneManager.LoadScene("GameScene");
     }
+
+    /// <summary>
+    /// 설정 열기
+    /// </summary>
+    public void OnClickSettings()
+    {
+        Popup_Settings.Show(null);
+    }
+
+    #endregion
 }
