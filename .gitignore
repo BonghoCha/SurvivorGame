@@ -70,3 +70,7 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+.idea/.idea.SurvivorGame/.idea/.gitignore
+.idea/.idea.SurvivorGame/.idea/encodings.xml
+.idea/.idea.SurvivorGame/.idea/indexLayout.xml
+.idea/.idea.SurvivorGame/.idea/vcs.xml
