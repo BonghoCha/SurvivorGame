@@ -28,7 +28,8 @@ public enum MissileType
 {
     FireballSoftBlue,
     RocketMeshMissileBlue,
-    LightningSoftYellow
+    LightningSoftYellow,
+    LiquidWaterClear,
 }
 
 public class MissileManager : MonoBehaviour
