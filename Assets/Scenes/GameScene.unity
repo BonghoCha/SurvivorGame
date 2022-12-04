@@ -255,6 +255,14 @@ MonoBehaviour:
     knockback: 0
     hasExtraEffect: 1
     debuffTime: 1.5
+  - projectileParticle: {fileID: 1084337564114024, guid: d1594451f682c2b44a78ba39a6c33121, type: 3}
+    impactParticle: {fileID: 1112118466390014, guid: 5a50299415e426543bd096edabf3eec7, type: 3}
+    muzzleParticle: {fileID: 176998, guid: 724522c9faa6f4b4e984d92b2d188e50, type: 3}
+    power: 4
+    speed: 1200
+    knockback: 0
+    hasExtraEffect: 1
+    debuffTime: 1.5
 --- !u!4 &130613917
 Transform:
   m_ObjectHideFlags: 0
@@ -8603,6 +8611,7 @@ Transform:
   - {fileID: 1021676047}
   - {fileID: 1623721201}
   - {fileID: 540036640}
+  - {fileID: 1728417729}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8886,6 +8895,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1721907304}
   m_CullTransparentMesh: 1
+--- !u!1 &1728417728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1728417729}
+  m_Layer: 10
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1728417729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728417728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1623199055}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1733801868
 GameObject:
   m_ObjectHideFlags: 0
@@ -8940,7 +8979,7 @@ MonoBehaviour:
   _critical: 10
   _firerate: 10
   _joystick: {fileID: 1541387835}
-  _missileType: 2
+  _missileType: 3
   _missilePrefab: {fileID: 2906357899715846639, guid: 992b862d335073947b57cac4cc46bab4, type: 3}
   _aimObject: {fileID: 1668840003}
   _aimParticle: {fileID: 466520125}
