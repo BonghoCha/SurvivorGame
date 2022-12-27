@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.DemiLib;
+using DG.Tweening;
 using UnityEngine;
 
 [Serializable]
@@ -30,6 +32,7 @@ public enum MissileType
     RocketMeshMissileBlue,
     LightningSoftYellow,
     LiquidWaterClear,
+    MaxOfWeapon
 }
 
 public class MissileManager : MonoBehaviour

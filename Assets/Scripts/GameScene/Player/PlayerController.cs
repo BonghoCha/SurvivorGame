@@ -146,7 +146,7 @@ public partial class PlayerController : MonoBehaviour
                     _aimParticle.Play();
                     _init = true;
                 }
-                var dir = (_direction * Time.deltaTime * _speed);
+                var dir = (_direction * (Time.deltaTime * _speed));
                 _rigidbody.velocity = dir;
 
                 // 방향에 맞춰서 돌아보게끔
@@ -157,5 +157,17 @@ public partial class PlayerController : MonoBehaviour
         {
             _rigidbody.velocity = Vector3.zero;
         }
+    }
+
+    public void ChangeWeapon()
+    {
+        var current = (int)_missileType;
+        current++;
+        if (current >= (int)MissileType.MaxOfWeapon)
+        {
+            current = 0;
+        }
+
+        _missileType = (MissileType)current;
     }
 }

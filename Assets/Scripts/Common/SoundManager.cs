@@ -24,28 +24,49 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource Effect;
 
     private Dictionary<string, ClipData> clipDictionary = new Dictionary<string, ClipData>();
+    private Sequence _playSequence;
+    private Sequence _stopSequence;
 
-    #region LiftCycles
+    #region ### LiftCycles ###
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-        }else
+        } else
         {
             Destroy(this.gameObject);
+            return;
         }
+
+        Initialize();
     }
     #endregion
 
-    #region Actions
+    
+    #region ### Actions ###
+
+    private void Initialize()
+    {
+        if (BGM == null)
+        {
+            BGM = transform.Find("BGM").GetComponent<AudioSource>();
+        }
+        if (Effect == null)
+        {
+            Effect = transform.Find("Effect").GetComponent<AudioSource>();
+        }
+        
+        _playSequence = DOTween.Sequence();
+        _stopSequence = DOTween.Sequence();
+    }
+    
     /// <summary>
     /// 사운드 재생
     /// </summary>
     /// <param name="name">오디오 클립 이름</param>
     /// <param name="immediately">즉시 재생할지 여부(BGM)</param>
-    Sequence _playSequence = DOTween.Sequence();
     public void SoundPlay(string name)
     {
         var immediately = false;
@@ -66,14 +87,9 @@ public class SoundManager : MonoBehaviour
                 fadeDelay = 0.5f;
             }
 
-            if (_playSequence.IsPlaying())
-            {
-                _playSequence.Kill();
-                _playSequence = DOTween.Sequence();
-            }
+            _playSequence = DOTween.Sequence();
             _playSequence.Append(BGM.DOFade(0, fadeDelay).OnComplete(() =>
             {
-                Debug.Log("셋팅");
                 BGM.clip = clipData.audioClip;
                 BGM.Play();
             }));
@@ -92,7 +108,6 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     /// <param name="name"></param>
     /// <param name="immediately"></param>
-    private Sequence _stopSequence = DOTween.Sequence();
     public void SoundStop(string name, bool immediately)
     {
         if (name.Contains("BGM"))
@@ -107,11 +122,7 @@ public class SoundManager : MonoBehaviour
                 {
                     var fadeDelay = 0.5f;
 
-                    if (_stopSequence.IsPlaying())
-                    {
-                        _stopSequence.Kill();
-                        _stopSequence = DOTween.Sequence();
-                    }
+                    _stopSequence = DOTween.Sequence();
                     _stopSequence.Append(BGM.DOFade(0, fadeDelay));
                     _stopSequence.Play();
                 }

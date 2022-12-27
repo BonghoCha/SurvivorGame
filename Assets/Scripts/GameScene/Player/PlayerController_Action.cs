@@ -7,11 +7,14 @@ using UnityEngine;
 public partial class PlayerController : MonoBehaviour
 {
     #region ### Actions ####
+
     public Action onShot;
     public Action onDash;
+
     #endregion
 
     float timeLimit = 5f;
+
     IEnumerator SynchronizedOnActions()
     {
         float time = 0f;
@@ -22,23 +25,26 @@ public partial class PlayerController : MonoBehaviour
                 switch (buttons[i].type)
                 {
                     case ButtonController.ButtonType.Shot:
+                    {
+                        if (onShot == null)
                         {
-                            if (onShot == null)
-                            {
-                                onShot += buttons[i].onClick;
-                            }
-                            break;
+                            onShot += buttons[i].onClick;
                         }
+
+                        break;
+                    }
                     case ButtonController.ButtonType.Dash:
+                    {
+                        if (onDash == null)
                         {
-                            if (onDash == null)
-                            {
-                                onDash += buttons[i].onClick;
-                            }
-                            break;
+                            onDash += buttons[i].onClick;
                         }
+
+                        break;
+                    }
                 }
             }
+
             if (onShot != null && onDash != null) break;
 
             time += Time.deltaTime;
@@ -56,17 +62,18 @@ public partial class PlayerController : MonoBehaviour
             switch (buttons[i].type)
             {
                 case ButtonController.ButtonType.Shot:
-                    {
-                        onShot -= buttons[i].onClick;
-                        break;
-                    }
+                {
+                    onShot -= buttons[i].onClick;
+                    break;
+                }
                 case ButtonController.ButtonType.Dash:
-                    {
-                        onDash -= buttons[i].onClick;
-                        break;
-                    }
+                {
+                    onDash -= buttons[i].onClick;
+                    break;
+                }
             }
         }
+
         if (onShot != null)
         {
             onShot -= Shot;
@@ -111,32 +118,11 @@ public partial class PlayerController : MonoBehaviour
         if (buttons[(int)ButtonController.ButtonType.Dash].isCooltime) return;
 
         Sequence sequence = DOTween.Sequence();
-        sequence.OnStart(() =>
-        {
-            _collider.enabled = false;
-        });
+        sequence.OnStart(() => { _collider.enabled = false; });
         sequence.Append(DOTween.To(() => _speed, _ => _speed = _, 1000f, 0.125f));
         sequence.Append(DOTween.To(() => _speed, _ => _speed = _, _initialSpeed, 0.125f));
-        sequence.OnComplete(() =>
-        {
-            _collider.enabled = true;
-        });
+        sequence.OnComplete(() => { _collider.enabled = true; });
 
         sequence.Play();
     }
-
-    private void Update()
-    {
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            OnShot();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            OnDash();
-        }
-    }
-#endif
 }

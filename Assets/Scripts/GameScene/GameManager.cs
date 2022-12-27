@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -92,6 +93,18 @@ public class GameManager : MonoBehaviour
         expSlider.value = _exp / _maxExp;
     }
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            var count = FindObjectsOfType<GameManager>();
+            if (count.Length > 1) return;
+
+            instance = this;
+            //DontDestroyOnLoad(this.gameObject);
+        }
+    }
+    
     private void OnEnable()
     {
         onCameraEffect += CameraNoise;
@@ -102,15 +115,14 @@ public class GameManager : MonoBehaviour
         onCameraEffect -= CameraNoise;
     }
 
-    private void Awake()
+    private void Start()
     {
-        if (instance == null)
-        {
-            var count = FindObjectsOfType<GameManager>();
-            if (count.Length > 1) return;
-
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
+        SoundManager.instance.SoundPlay("BGM_B");
+    }
+    
+    public void OnClickGoIntro()
+    {
+        SceneManager.LoadScene("IntroScene");
+        SoundManager.instance.SoundStop("BGM_B", false);
     }
 }

@@ -60,7 +60,15 @@ public class EnemyController : ObjectManager
         GameManager.instance.RemoveEnemy();
 
         PlayParticle();
-        _sprite.DOFade(0f, 1f).OnComplete(OnDestroyObject);
+        if (_line != null)
+        {
+            _line.DOFade(0f, 1f).OnComplete(OnDestroyObject);    
+        }
+
+        if (_body != null)
+        {
+            _body.DOFade(0f, 1f).OnComplete(OnDestroyObject);    
+        }
     }
 
 
@@ -71,7 +79,7 @@ public class EnemyController : ObjectManager
         hp = 50;
         transform.position = _spawnPosition;
 
-        _sprite.color = new Color(255, 255, 255, 1);
+        //_sprite.color = new Color(255, 255, 255, 1);
 
         _collider.enabled = true;
 

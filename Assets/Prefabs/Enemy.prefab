@@ -5077,7 +5077,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22cffb92fd6c5904e918569b4b809393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _destroyParticle: {fileID: 0}
+  _destroyParticle: {fileID: 7133101608212563848}
+  _line: {fileID: 6004895474641438663}
+  _body: {fileID: 4576910948395069677}
   Player: {fileID: 0}
   isContact: 0
   speed: 1

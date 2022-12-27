@@ -10,7 +10,8 @@ public abstract class ObjectManager : MonoBehaviour
     protected Collider _collider;
     protected Rigidbody _rigidbody;
 
-    protected SpriteRenderer _sprite;
+    [SerializeField] protected SpriteRenderer _line;
+    [SerializeField] protected SpriteRenderer _body;
 
     protected float hp = 50;
 
@@ -19,7 +20,6 @@ public abstract class ObjectManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_sprite == null) _sprite = GetComponent<SpriteRenderer>();
         if (_collider == null) _collider = GetComponent<Collider>();
         if (_rigidbody == null) _rigidbody = GetComponent<Rigidbody>();
 
@@ -44,18 +44,32 @@ public abstract class ObjectManager : MonoBehaviour
 
     IEnumerator CoStop(float delay)
     {
-        if (_sprite != null)
+        var beforeLineColor = _line.color;
+        if (_line != null)
         {
-            _sprite.color = debuffColor;
+            _line.color = debuffColor;
         }
+
+        var color = _body.color;
+        var beforeBodyColor = new Color(color.r, color.g, color.b);
+        if (_body != null)
+        {
+            _body.color = debuffColor;
+        }
+        
         _canMove = false;
 
         yield return new WaitForSeconds(delay);
 
-        if (_sprite != null)
+        if (_line != null)
         {
-            _sprite.color = defaultColor;            
+            _line.color = beforeLineColor;            
         }
+        if (_body != null)
+        {
+            _body.color = beforeBodyColor;
+        }
+        
         _canMove = true;
     }
 
