@@ -119,10 +119,23 @@ public partial class PlayerController : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
         sequence.OnStart(() => { _collider.enabled = false; });
-        sequence.Append(DOTween.To(() => _speed, _ => _speed = _, 1000f, 0.125f));
-        sequence.Append(DOTween.To(() => _speed, _ => _speed = _, _initialSpeed, 0.125f));
+        sequence.Append(DOTween.To(() => _speed, _ => _speed = _, 1000f, 0.1f));
+        sequence.Append(DOTween.To(() => _speed, _ => _speed = _, _initialSpeed, 0.1f).SetDelay(0.125f));
         sequence.OnComplete(() => { _collider.enabled = true; });
 
         sequence.Play();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shot();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            Dash();
+        }
     }
 }

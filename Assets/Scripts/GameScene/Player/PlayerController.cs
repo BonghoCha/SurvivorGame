@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.PlayerLoop;
 
 public partial class PlayerController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public partial class PlayerController : MonoBehaviour
     [Header("Public Preperties")]
     Rigidbody _rigidbody;
     Collider _collider;
+    [SerializeField] private TrailRenderer _trailRenderer;
 
     #region ### Joystick ###
     [SerializeField] Joystick _joystick;
@@ -43,10 +45,10 @@ public partial class PlayerController : MonoBehaviour
     [SerializeField] Transform _aimObject;
     [SerializeField] ParticleSystem _aimParticle;
     [SerializeField] Transform _shootPosition;
-
+    
     [SerializeField] float missileSpeed = 1000f;
     #endregion
-
+    
     #region ### Game Preperties ###
     bool _init = false;                  // 캐릭터를 움직였는지 여부
     Vector3 _direction;                  // 플레이어가 향한 방향
